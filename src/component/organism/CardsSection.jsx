@@ -4,8 +4,8 @@ function CardsSection() {
   
   
   return (
-    <section>
-        
+    <section className="flex justify-center bg-green-600 h-120 w-full">
+        CARD
     </section>
   )
 }

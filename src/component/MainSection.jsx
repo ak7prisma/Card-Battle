@@ -6,11 +6,10 @@ function MainSection() {
   
   
   return (
-    <main>
+    <main className="flex flex-col justify-center items-center w-full">
         <PlayersSection />
         <CardsSection />
         <ActionSection />
-        
     </main>
   )
 }

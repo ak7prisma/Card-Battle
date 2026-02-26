@@ -4,8 +4,8 @@ function ActionSection() {
   
   
   return (
-    <section>
-        
+    <section className="flex justify-center bg-red-700 h-20 w-full">
+        ACTION
     </section>
   )
 }
