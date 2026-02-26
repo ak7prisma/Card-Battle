@@ -4,7 +4,7 @@ function Navbar() {
   
   
   return (
-    <nav className="flex justify-between bg-amber-900 w-full p-5">
+    <nav className="flex justify-between w-full p-5">
         <div className="flex">
             <img src="" alt="Logo" />
             <span>Card Battle</span>

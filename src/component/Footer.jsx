@@ -4,7 +4,7 @@ function Footer() {
   
   
   return (
-    <footer className="flex justify-center items-end bg-purple-600 p-5">
+    <footer className="flex justify-center items-center p-5">
         FOOTER
     </footer>
   )
