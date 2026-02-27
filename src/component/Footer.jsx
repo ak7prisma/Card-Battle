@@ -1,6 +1,6 @@
 
 
-function Footer() {
+export default function Footer() {
   
   
   return (
@@ -9,5 +9,3 @@ function Footer() {
     </footer>
   )
 }
-
-export default Footer
