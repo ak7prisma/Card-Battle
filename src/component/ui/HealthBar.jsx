@@ -10,15 +10,7 @@ export default function HealthBar({hp, maxHp, left}) {
         </div>
         <div className="absolute transition-[width] duration-500 ease-linear right-1.25 inset-y-1.25 bg-white" style={{ width: `${0}%` }}></div>
 
-        <div
-          style={{
-            position: "absolute",
-            top: "5px",
-            left: 0,
-            right: 0,
-            textAlign: "center"
-          }}
-        >
+        <div className="absolute top-1.25 left-0 right-0 text-center">
         </div>
       </div>
     </div>

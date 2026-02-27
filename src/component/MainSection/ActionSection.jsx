@@ -1,9 +1,11 @@
 import { GiBattleAxe, GiCardRandom } from "react-icons/gi";
-
+import { cards } from "../../constant/card";
+import { getRandomCard } from "../../utils/randomcard";
 
 export default function ActionSection( { isFlip, setIsFlip, isShuffle, setIsShuffle} ) {
   
   const flip = isFlip? "CLOSE" : "OPEN";
+  
   const handleShuffle = () => {
     setIsShuffle(true)
     setTimeout(() => {
