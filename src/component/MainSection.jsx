@@ -7,13 +7,14 @@ import { useState } from "react"
 export default function MainSection() {
   
   const [isFlip, setIsFlip] = useState(false);
+  const [isShuffle, setIsShuffle] = useState(false);
   const [card, setCard] = useState("");
   
   return (
     <main className="flex flex-col justify-center items-center w-full gap-5">
         <PlayersSection />
-        <CardsSection isFlip={isFlip} Card={card}/>
-        <ActionSection isFlip={isFlip} setIsFlip={setIsFlip}/>
+        <CardsSection isFlip={isFlip} isShuffle={isShuffle} Card={card}/>
+        <ActionSection isFlip={isFlip} setIsFlip={setIsFlip} isShuffle={isShuffle} setIsShuffle={setIsShuffle}/>
     </main>
   )
 }
