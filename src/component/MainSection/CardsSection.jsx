@@ -1,6 +1,6 @@
 
 
-function CardsSection() {
+export default function CardsSection() {
   
   
   return (
@@ -9,5 +9,3 @@ function CardsSection() {
     </section>
   )
 }
-
-export default CardsSection

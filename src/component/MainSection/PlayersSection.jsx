@@ -1,6 +1,6 @@
 
 
-function PlayersSection() {
+export default function PlayersSection() {
   
   
   return (
@@ -9,5 +9,3 @@ function PlayersSection() {
     </section>
   )
 }
-
-export default PlayersSection

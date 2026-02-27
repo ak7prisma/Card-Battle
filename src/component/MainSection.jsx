@@ -1,8 +1,8 @@
-import PlayersSection from "./organism/PlayersSection"
-import CardsSection from "./organism/CardsSection"
-import ActionSection from "./organism/ActionSection"
+import PlayersSection from "./MainSection/PlayersSection"
+import CardsSection from "./MainSection/CardsSection"
+import ActionSection from "./MainSection/ActionSection"
 
-function MainSection() {
+export default function MainSection() {
   
   
   return (
@@ -13,5 +13,3 @@ function MainSection() {
     </main>
   )
 }
-
-export default MainSection

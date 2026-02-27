@@ -1,6 +1,6 @@
 
 
-function ActionSection() {
+export default function ActionSection() {
   
   
   return (
@@ -9,5 +9,3 @@ function ActionSection() {
     </section>
   )
 }
-
-export default ActionSection
