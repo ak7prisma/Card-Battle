@@ -17,7 +17,7 @@ export default function MainSection() {
     <main className="flex flex-col justify-center items-center w-full gap-5">
         <PlayersSection />
         <CardsSection isFlip={isFlip} isShuffle={isShuffle} Image1={Card1.image} Image2={Card2.image}/>
-        <ActionSection isFlip={isFlip} setIsFlip={setIsFlip} isShuffle={isShuffle} setIsShuffle={setIsShuffle}/>
+        <ActionSection isFlip={isFlip} setIsFlip={setIsFlip} isShuffle={isShuffle} setIsShuffle={setIsShuffle} setCard1={setCard1} setCard2={setCard2}/>
     </main>
   )
 }
