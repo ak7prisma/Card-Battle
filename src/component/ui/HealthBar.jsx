@@ -20,4 +20,4 @@ export default function HealthBar({hp, maxHp}) {
       </div>
     </div>
   );
-};
+}
