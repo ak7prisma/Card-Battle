@@ -1,4 +1,4 @@
-import { TbPlayCard1, TbPlayCard10, TbPlayCard2, TbPlayCard3, TbPlayCard4, TbPlayCard5, TbPlayCard6, TbPlayCard7, TbPlayCard8, TbPlayCard9, TbPlayCardJ, TbPlayCardK, TbPlayCardQ } from "react-icons/tb";
+import { TbPlayCard1, TbPlayCard10, TbPlayCard2, TbPlayCard3, TbPlayCard4, TbPlayCard5, TbPlayCard6, TbPlayCard7, TbPlayCard8, TbPlayCard9, TbPlayCardJ, TbPlayCardK, TbPlayCardQ, TbPlayCardStar } from "react-icons/tb";
 
 export const cards = [
   {
@@ -95,6 +95,6 @@ export const cards = [
     name: "Star",
     value: 15,
     damage: 150,
-    image: TbPlayCardK,
+    image: TbPlayCardStar,
   },
 ]
