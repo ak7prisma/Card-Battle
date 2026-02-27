@@ -6,7 +6,7 @@ export default function MainSection() {
   
   
   return (
-    <main className="flex flex-col justify-center items-center w-full">
+    <main className="flex flex-col justify-center items-center w-full gap-5">
         <PlayersSection />
         <CardsSection />
         <ActionSection />

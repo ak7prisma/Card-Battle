@@ -1,0 +1,98 @@
+export const cards = [
+  {
+    name: "1",
+    value: 1,
+    damage: 10,
+    image: TbPlayCard1,
+  },
+  {
+    name: "2",
+    value: 2,
+    damage: 20,
+    image: TbPlayCard2,
+  },
+  {
+    name: "3",
+    value: 3,
+    damage: 30,
+    image: TbPlayCard3,
+  },
+  {
+    name: "4",
+    value: 4,
+    damage: 40,
+    image: TbPlayCard4,
+  },
+  {
+    name: "5",
+    value: 5,
+    damage: 50,
+    image: TbPlayCard5,
+  },
+  {
+    name: "6",
+    value: 6,
+    damage: 60,
+    image: TbPlayCard6,
+  },
+  {
+    name: "7",
+    value: 7,
+    damage: 70,
+    image: TbPlayCard7,
+  },
+  {
+    name: "8",
+    value: 8,
+    damage: 80,
+    image: TbPlayCard8,
+  },
+  {
+    name: "9",
+    value: 9,
+    damage: 90,
+    image: TbPlayCard9,
+  },
+  {
+    name: "10",
+    value: 10,
+    damage: 100,
+    image: TbPlayCard10,
+  },
+  {
+    name: "J",
+    value: 11,
+    damage: 100,
+    image: TbPlayCardJ,
+  },
+  {
+    name: "Q",
+    value: 12,
+    damage: 100,
+    image: TbPlayCardQ,
+  },
+  {
+    name: "K",
+    value: 13,
+    damage: 100,
+    image: TbPlayCardK,
+  },
+  {
+    name: "A",
+    value: 14,
+    damage: 110,
+    image: TbPlayCardK,
+  },
+  {
+    name: "A",
+    value: 14,
+    damage: 110,
+    image: TbPlayCardK,
+  },
+  {
+    name: "Star",
+    value: 15,
+    damage: 150,
+    image: TbPlayCardK,
+  },
+]
