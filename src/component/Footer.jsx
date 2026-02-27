@@ -4,8 +4,8 @@ export default function Footer() {
   
   
   return (
-    <footer className="flex justify-center items-center p-5">
-        FOOTER
+    <footer className="flex justify-center items-center p-5 border-t border-slate-300/20 text-slate-300/50 mt-20">
+      © by Ahmad Kurnia Prisma || ahmadkurniaprisma@gmail.com
     </footer>
   )
 }

@@ -4,7 +4,7 @@ export default function CardsSection() {
   
   
   return (
-    <section className="flex justify-center w-full gap-10">
+    <section className="flex justify-center w-full gap-10 mb-5">
       <div className="flex max-w-full max-h-full justify-center">
         <TbPlayCard size={320} className="fill-red-700 z-10"/>
         <TbPlayCard size={320} className="absolute fill-red-700/60 translate-4 z-8"/>
