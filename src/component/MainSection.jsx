@@ -2,7 +2,7 @@ import PlayersSection from "./MainSection/PlayersSection"
 import CardsSection from "./MainSection/CardsSection"
 import ActionSection from "./MainSection/ActionSection"
 import { cards } from "../constant/card"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { getRandomCard } from "../utils/randomcard"
 
 export default function MainSection() {
@@ -16,6 +16,26 @@ export default function MainSection() {
   const maxHp = 1000;
   const [hpPlayer1, setHpPlayer1] = useState(maxHp);
   const [hpPlayer2, setHpPlayer2] = useState(maxHp);
+
+  const resetHp = () => {
+    setHpPlayer1(1000)
+    setHpPlayer2(1000)
+  }
+
+  useEffect(() => {
+    if(hpPlayer1 <= 0 ) {
+      setTimeout(() => {
+        alert("Player 2 Win")
+        resetHp();
+      }, 1500);
+    }
+    else if(hpPlayer2 <= 0) {
+      setTimeout(() => {
+        alert("Player 1 Win")
+        resetHp();
+      }, 1500); 
+    }
+}, [hpPlayer1, hpPlayer2]);
 
   return (
     <main className="flex flex-col justify-center items-center w-full gap-5">
@@ -40,8 +60,6 @@ export default function MainSection() {
           setCard2={setCard2}
           setHpPlayer1={setHpPlayer1} 
           setHpPlayer2={setHpPlayer2}
-          hpPlayer1={hpPlayer1}
-          hpPlayer2={hpPlayer2}
         />
     </main>
   )

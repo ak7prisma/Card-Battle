@@ -1,10 +1,10 @@
 import { GiBattleAxe, GiCardRandom } from "react-icons/gi";
 import { cards } from "../../constant/card";
 import { getRandomCard } from "../../utils/randomcard";
-import { useEffect } from "react";
 
-export default function ActionSection( { isFlip, setIsFlip, isShuffle, setIsShuffle, setCard1, setCard2, setHpPlayer1, setHpPlayer2, Card1, Card2, hpPlayer1, hpPlayer2} ) {
+export default function ActionSection( { isFlip, setIsFlip, isShuffle, setIsShuffle, setCard1, setCard2, setHpPlayer1, setHpPlayer2, Card1, Card2} ) {
   
+  const MinHp = 0;
   const handleShuffle = () => {
     setIsShuffle(true)
 
@@ -22,18 +22,15 @@ export default function ActionSection( { isFlip, setIsFlip, isShuffle, setIsShuf
 
     setTimeout(() => {
       if(Card1.value > Card2.value) {
-        setHpPlayer2(prev => prev - damageDealt)
+        setHpPlayer2(prev => Math.max( prev - damageDealt, MinHp))
       }
       else if(Card1.value == Card2.value) alert("Draw");
-      else setHpPlayer1(prev => prev - damageDealt);
-    }, 600);
+      else setHpPlayer1(prev => Math.max( prev - damageDealt, MinHp));
+    }, 500);
 
     setTimeout(() => {
 
       resetCard();
-      console.log(hpPlayer1);
-      console.log(hpPlayer2);
-
       setIsFlip(false)
     }, 1500);
   }
@@ -42,31 +39,11 @@ export default function ActionSection( { isFlip, setIsFlip, isShuffle, setIsShuf
     setCard1(getRandomCard(cards))
     setCard2(getRandomCard(cards))
   }
-
-  const resetHp = () => {
-    setHpPlayer1(1000)
-    setHpPlayer2(1000)
-  }
-
-  useEffect(() => {
-    if(hpPlayer1 < 1 ) {
-      setTimeout(() => {
-        alert("Player 2 Win")
-        resetHp();
-      }, 2000);
-    }
-    else if(hpPlayer2 < 2) {
-      setTimeout(() => {
-        alert("Player 1 Win")
-        resetHp();
-      }, 2000); 
-    }
-}, [hpPlayer1, hpPlayer2]);
   
   return (
     <section className="flex justify-center items-center h-20 w-full gap-20 text-lg font-medium tracking-widest">
         <button 
-          className={`${isFlip, isShuffle? "cursor-not-allowed" : "cursor-pointer"} flex flex-row-reverse justify-center items-center py-2 rounded-bl-full rounded-tr-full gap-5 w-80 text-cyan-400 border-2 border-cyan-400 hover:bg-cyan-400/30 hover:scale-102 duration-300`}
+          className={`${isFlip || isShuffle? "cursor-not-allowed" : "cursor-pointer"} flex flex-row-reverse justify-center items-center py-2 rounded-bl-full rounded-tr-full gap-5 w-80 text-cyan-400 border-2 border-cyan-400 hover:bg-cyan-400/30 hover:scale-102 duration-300`}
           onClick={handleShuffle}
           disabled={isFlip || isShuffle}
           >
@@ -74,7 +51,7 @@ export default function ActionSection( { isFlip, setIsFlip, isShuffle, setIsShuf
           <GiCardRandom size={30} />
         </button>
         <button 
-          className={`${isShuffle, isFlip? "cursor-not-allowed" : "cursor-pointer"} flex justify-center items-center py-2 rounded-br-full rounded-tl-full gap-5 w-80 text-red-500 bg-red-700/30 hover:bg-red-700/60 hover:scale-102 duration-300`}
+          className={`${isShuffle || isFlip? "cursor-not-allowed" : "cursor-pointer"} flex justify-center items-center py-2 rounded-br-full rounded-tl-full gap-5 w-80 text-red-500 bg-red-700/30 hover:bg-red-700/60 hover:scale-102 duration-300`}
           onClick={handleFlip}
           disabled={isShuffle || isFlip}
           >
