@@ -2,14 +2,16 @@ import { GiBattleAxe, GiCardRandom } from "react-icons/gi";
 import { cards } from "../../constant/card";
 import { getRandomCard } from "../../utils/randomcard";
 
-export default function ActionSection( { isFlip, setIsFlip, isShuffle, setIsShuffle, setCard1, setCard2} ) {
+export default function ActionSection( { isFlip, setIsFlip, isShuffle, setIsShuffle, setCard1, setCard2, setHpPlayer1, setHpPlayer2, Card1, Card2} ) {
   
   const flip = isFlip? "CLOSE" : "OPEN";
   
   const handleShuffle = () => {
     setIsShuffle(true)
+
     setCard1(getRandomCard(cards))
     setCard2(getRandomCard(cards))
+
     setTimeout(() => {
       setIsShuffle(false)
     }, 750);
@@ -17,7 +19,24 @@ export default function ActionSection( { isFlip, setIsFlip, isShuffle, setIsShuf
 
   const handleFlip = () => {
     setIsFlip(true)
+
+    const damageDealt=Card1.damage+Card2.damage;
+    
     setTimeout(() => {
+
+      if(Card1.value > Card2.value) {
+        setHpPlayer2(prev => prev - damageDealt)
+        alert("Damage "+damageDealt)
+      }
+      else if(Card1.value == Card2.value) alert("Draw");
+      else {
+        setHpPlayer1(prev => prev - damageDealt)
+        alert("Damage "+damageDealt)
+      }
+
+      setCard1(getRandomCard(cards))
+      setCard2(getRandomCard(cards))
+      
       setIsFlip(false)
     }, 2000);
   }
