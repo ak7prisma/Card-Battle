@@ -2,7 +2,7 @@ import { TbPlayCard } from "react-icons/tb"
 
 export default function CardsSection({ isFlip, isShuffle, Image1, Image2 }) {
   
-  const animateClass = `perspective-dramatic transition-all backface-hidden duration-700`;
+  const animateClass = `perspective-dramatic transition-all backface-hidden duration-600`;
   
   return (
 

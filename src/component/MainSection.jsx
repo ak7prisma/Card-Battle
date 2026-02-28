@@ -40,6 +40,8 @@ export default function MainSection() {
           setCard2={setCard2}
           setHpPlayer1={setHpPlayer1} 
           setHpPlayer2={setHpPlayer2}
+          hpPlayer1={hpPlayer1}
+          hpPlayer2={hpPlayer2}
         />
     </main>
   )
