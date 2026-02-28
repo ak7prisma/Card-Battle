@@ -16,7 +16,7 @@ export default function MainSection() {
   const maxHp = 1000;
   const [hpPlayer1, setHpPlayer1] = useState(maxHp);
   const [hpPlayer2, setHpPlayer2] = useState(maxHp);
-  
+
   return (
     <main className="flex flex-col justify-center items-center w-full gap-5">
         <PlayersSection 
