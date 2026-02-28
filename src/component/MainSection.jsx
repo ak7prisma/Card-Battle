@@ -38,7 +38,7 @@ export default function MainSection() {
 }, [hpPlayer1, hpPlayer2]);
 
   return (
-    <main className="flex flex-col justify-center items-center w-full gap-5">
+    <main className="flex flex-col justify-center items-center w-full gap-5 px-10">
         <PlayersSection 
           hpPlayer1={hpPlayer1} 
           hpPlayer2={hpPlayer2}
