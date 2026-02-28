@@ -3,7 +3,7 @@ import { navLinks } from "../../constant";
 export default function MobileMenu( setIsOpen ) {
   return (
     <div
-      className="fixed left-0 right-0 top-25 md:hidden bg-black/5 border-t border-white/10 overflow-hidden rounded-b-3xl backdrop-blur-xl"
+      className="fixed left-0 right-0 z-100 top-25 md:hidden bg-black/5 border-t border-white/10 overflow-hidden backdrop-blur-xl"
       >
       <div className="flex flex-col p-6 space-y-4 text-center">
         {navLinks.map((link) => (
