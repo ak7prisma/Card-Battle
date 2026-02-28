@@ -1,4 +1,4 @@
-import { navLinks } from "../../constant";
+import { navLinks } from "../../constant/navlink";
 
 export default function MobileMenu( setIsOpen ) {
   return (
@@ -18,7 +18,8 @@ export default function MobileMenu( setIsOpen ) {
         ))}
         <div className="pt-4 border-t border-white/10">
           <a
-            href="#contact"
+            href="https://portofolio-ahmad-kurnia-prisma.vercel.app/#contact"
+            target="_blank"
             onClick={() => setIsOpen(false)}
             className="bg-red-700 hover:bg-red-700/70 text-white py-3 rounded-full w-full block font-bold duration-300"
           >

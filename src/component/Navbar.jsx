@@ -3,7 +3,7 @@ import { GoPerson } from "react-icons/go"
 import { useState } from "react"
 import { BiMenu, BiX } from "react-icons/bi";
 import MobileMenu from "./Navbar/MobileMenu";
-import { navLinks } from "../constant";
+import { navLinks } from "../constant/navlink";
 
 export default function Navbar() {
 
@@ -26,16 +26,19 @@ export default function Navbar() {
                 <ul className="hidden md:flex gap-10">
                     {navLinks.map((link) => (
                         <li 
-                        key={link.name}
-                        className="tracking-widest hover:bg-red-600/40 rounded-xl duration-300 p-2 px-6 cursor-pointer">
+                          key={link.name}
+                          className="tracking-widest hover:bg-red-600/40 rounded-xl duration-300 p-2 px-6 cursor-pointer">
                             <a href={link.href}>{link.name}</a>
                         </li>
                     ))}
                 </ul>
                 <div className="hidden md:flex items-center gap-4">
-                    <button className="bg-red-700 px-5 tracking-wider py-2.5 rounded-l-xl font-semibold hover:bg-red-700/70 duration-300 cursor-pointer">
+                    <a 
+                      href="https://portofolio-ahmad-kurnia-prisma.vercel.app/#contact"
+                      target="_blank"
+                      className="bg-red-700 px-5 tracking-wider py-2.5 rounded-l-xl font-semibold hover:bg-red-700/70 duration-300 cursor-pointer">
                         Follow Me
-                    </button>
+                    </a>
                     <GoPerson  className="w-10 h-10 p-2 border-2 rounded-r-xl cursor-pointer hover:text-slate-200/70 duration-300"/>
                 </div>
 
