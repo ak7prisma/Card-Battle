@@ -41,7 +41,7 @@ export default function ActionSection( { isFlip, setIsFlip, isShuffle, setIsShuf
   }
   
   return (
-    <section className="flex justify-center items-center h-20 w-full gap-10 md:gap-20 text-sm md:text-lg font-medium tracking-widest">
+    <section className="flex justify-center items-center h-20 w-full gap-10 md:gap-20 text-sm md:text-lg font-medium tracking-widest px-10">
         <button 
           className={`${isFlip || isShuffle? "cursor-not-allowed" : "cursor-pointer"} flex flex-row-reverse justify-center items-center py-2 rounded-bl-full rounded-tr-full gap-5 w-80 text-cyan-400 border-2 border-cyan-400 hover:bg-cyan-400/30 hover:scale-102 duration-300`}
           onClick={handleShuffle}

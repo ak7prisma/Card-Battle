@@ -4,7 +4,7 @@ export default function Playerstats({left, name, rank, hp, maxHp}){
 
     return(
         
-        <div className={`flex flex-col w-100 gap-3 ${left? "text-red-800" : "text-cyan-400"}`}>
+        <div className={`flex flex-col scale-65 md:scale-100 gap-3 ${left? "text-red-800" : "text-cyan-400"}`}>
           <div className={`flex ${left? "": "flex-row-reverse"} justify-between`}>
             <p>
                 {name}
