@@ -1,11 +1,11 @@
-import PlayersSection from "./MainSection/PlayersSection"
-import CardsSection from "./MainSection/CardsSection"
-import ActionSection from "./MainSection/ActionSection"
+import PlayersSection from "../component/BattlePage/PlayersSection"
+import CardsSection from "../component/BattlePage/CardsSection"
+import ActionSection from "../component/BattlePage/ActionSection"
 import { cards } from "../constant/card"
 import { useState, useEffect } from "react"
 import { getRandomCard } from "../utils/randomcard"
 
-export default function MainSection() {
+export default function BattlePage() {
   
   const [isFlip, setIsFlip] = useState(false);
   const [isShuffle, setIsShuffle] = useState(false);

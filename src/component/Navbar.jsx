@@ -2,33 +2,36 @@ import { SiRepublicofgamers } from "react-icons/si"
 import { GoPerson } from "react-icons/go"
 import { useState } from "react"
 import { BiMenu, BiX } from "react-icons/bi";
+import { NavLink } from "react-router-dom";
 import MobileMenu from "./Navbar/MobileMenu";
 import { navLinks } from "../constant/navlink";
 
 export default function Navbar() {
 
     const [isOpen, setIsOpen] = useState(false);
-    const [isScrolled, setScrolled] = useState(false);
-
-    const handleScroll = () => {
-
-    }
 
     return (
         <nav className="sticky top-0 z-100 flex flex-col md:flex-row w-full text-slate-200 font-medium text-sm">
             <div className="flex justify-between items-center w-full py-7 px-12 bg-black/5 backdrop-blur-xl">
-                <div className="flex items-center gap-2">
+                <NavLink to="/" className="flex items-center gap-2">
                 <SiRepublicofgamers className="w-12 h-12 px-2 py-1 bg-red-700 rounded-tl-xl rounded-br-xl"/>
                 <span className="flex gap-2 text-xl font-semibold">
                     <p className="tracking-widest">Card</p> <p className="text-red-700 tracking-wider">Battle</p>
                 </span>
-                </div>
+                </NavLink>
                 <ul className="hidden md:flex gap-10">
                     {navLinks.map((link) => (
-                        <li 
-                          key={link.name}
-                          className="tracking-widest hover:bg-red-600/40 rounded-xl duration-300 p-2 px-6 cursor-pointer">
-                            <a href={link.href}>{link.name}</a>
+                        <li key={link.name}>
+                            <NavLink
+                              to={link.href}
+                              className={({ isActive }) =>
+                                `tracking-widest rounded-xl duration-300 p-2 px-6 cursor-pointer block ${
+                                  isActive ? "bg-red-600/40 text-white" : "hover:bg-red-600/40"
+                                }`
+                              }
+                            >
+                                {link.name}
+                            </NavLink>
                         </li>
                     ))}
                 </ul>

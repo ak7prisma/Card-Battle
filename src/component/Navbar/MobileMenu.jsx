@@ -1,20 +1,28 @@
+import { NavLink } from "react-router-dom";
 import { navLinks } from "../../constant/navlink";
 
-export default function MobileMenu( setIsOpen ) {
+export default function MobileMenu({ setIsOpen }) {
   return (
     <div
       className="fixed left-0 right-0 z-100 top-25 md:hidden bg-black/5 border-t border-white/10 overflow-hidden backdrop-blur-xl"
       >
       <div className="flex flex-col p-6 space-y-4 text-center">
         {navLinks.map((link) => (
-          <a
+          <NavLink
             key={link.name}
-            href={link.href}
+            to={link.href}
             onClick={() => setIsOpen(false)}
-            className="text-slate-300 hover:text-red-600 py-2 block font-medium border-b-2 border-transparent hover:border-b-2 hover:border-red-800 rounded-b-full w-auto duration-300"
+            className={({ isActive }) =>
+              `py-2 block font-medium border-b-2 rounded-b-full w-auto duration-300 ${
+                isActive
+                  ? "text-red-600 border-red-800"
+                  : "text-slate-300 border-transparent hover:text-red-600 hover:border-red-800"
+              }`
+            }
           >
             {link.name}
-          </a>
+
+          </NavLink>
         ))}
         <div className="pt-4 border-t border-white/10">
           <a
