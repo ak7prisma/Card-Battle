@@ -38,17 +38,32 @@ function normalizeCard(raw) {
   };
 }
 
-/**
- * Fetch ALL cards from the API with pagination support.
- * Stops at 1000 cards or when all pages are fetched.
- */
+const CACHE_KEY = "card_battle_collection";
+const CACHE_TIMESTAMP_KEY = "card_battle_timestamp";
+const CACHE_DURATION = 1000 * 60 * 60;
+
 export async function fetchCards() {
+  const now = Date.now();
+  const cachedData = localStorage.getItem(CACHE_KEY);
+  const cachedTimestamp = localStorage.getItem(CACHE_TIMESTAMP_KEY);
+
+  // Return cache if it's still fresh
+  if (cachedData && cachedTimestamp && now - parseInt(cachedTimestamp) < CACHE_DURATION) {
+    console.log("🚀 Serving cards from LocalStorage cache");
+    try {
+      return JSON.parse(cachedData);
+    } catch (e) {
+      console.error("Failed to parse cached cards", e);
+    }
+  }
+
   try {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 10000);
 
-    // Hit the API exactly 1 time requesting 1000 items
     const url = `${API_URL}?limit=1000`;
+    console.log("📡 Fetching fresh cards from API...");
+    
     const response = await fetch(url, {
       signal: controller.signal,
       headers: { "x-api-key": API_KEY },
@@ -59,22 +74,31 @@ export async function fetchCards() {
 
     const json = await response.json();
     const cards = (json.data || []).map(normalizeCard);
-
     const usable = cards.filter((c) => c.name && c.name !== "Unknown Card");
 
     if (usable.length > 0) {
-      console.log(`✅ Single fetch returned ${usable.length} cards from API`);
+      console.log(`✅ API fetch successful: ${usable.length} cards`);
+      
+      // Update cache
+      localStorage.setItem(CACHE_KEY, JSON.stringify(usable));
+      localStorage.setItem(CACHE_TIMESTAMP_KEY, now.toString());
+      
       return usable;
     }
 
     throw new Error("No usable cards from API");
   } catch (error) {
     console.error("⚠️ API fetch failed:", error.message);
+    
+    // Fallback to stale cache if API fails
+    if (cachedData) {
+      console.warn("🔄 API failed, falling back to stale cache");
+      return JSON.parse(cachedData);
+    }
+    
     return [];
   }
 }
-
-//Get only CHARACTER-type cards with power > 0 for battle.
 
 export function getBattleCards(allCards) {
   return allCards.filter((c) => c.type === "CHARACTER" && c.power > 0);
