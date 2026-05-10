@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
 import { fetchCards } from "../utils/api";
-import { getRarityColor, getRarityLabel } from "../utils/gachaSystem";
-
-const ITEMS_PER_PAGE = 20;
-const TYPES = ["ALL", "CHARACTER", "LEADER", "EVENT", "STAGE"];
+import DragonBallCard from "../component/ui/DragonBallCard";
+import { RARITIES, ITEMS_PER_PAGE } from "../constant/card";
+import { getRarityLabel } from "../utils/gachaSystem";
 
 export default function CollectionPage() {
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [typeFilter, setTypeFilter] = useState("ALL");
+  const [rarityFilter, setRarityFilter] = useState("ALL");
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 
@@ -19,10 +18,10 @@ export default function CollectionPage() {
     });
   }, []);
 
-  useEffect(() => { setPage(1); }, [typeFilter, search]);
+  useEffect(() => { setPage(1); }, [rarityFilter, search]);
 
   const filtered = cards.filter((c) => {
-    if (typeFilter !== "ALL" && c.type !== typeFilter) return false;
+    if (rarityFilter !== "ALL" && c.rarity !== rarityFilter) return false;
     if (search && !c.name.toLowerCase().includes(search.toLowerCase())) return false;
     return true;
   });
@@ -45,68 +44,49 @@ export default function CollectionPage() {
     <main className="flex flex-col items-center w-full min-h-screen py-8 px-4 md:px-12">
       {/* Header */}
       <div className="text-center mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold tracking-widest">
-          <span className="text-slate-200">Card</span>{" "}
-          <span className="text-red-700">Collection</span>
+        <h1 className="text-3xl md:text-4xl font-bold tracking-widest uppercase">
+          <span className="text-slate-200">Warrior</span>{" "}
+          <span className="text-red-600 drop-shadow-[0_0_8px_rgba(220,38,38,0.5)]">Collection</span>
         </h1>
-        <p className="text-slate-400 text-sm mt-2 tracking-wider">{filtered.length} cards found</p>
+        <p className="text-slate-400 text-xs mt-2 tracking-[0.2em] uppercase opacity-70">{filtered.length} Warriors detected</p>
       </div>
 
       {/* Search & Filters */}
-      <div className="flex flex-col md:flex-row gap-4 mb-8 w-full max-w-4xl">
-        <input
-          id="collection-search"
-          type="text"
-          placeholder="Search cards..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="flex-1 bg-slate-800/50 border-2 border-slate-600/50 rounded-xl px-4 py-2.5 text-slate-200 placeholder-slate-500 focus:border-red-700/50 focus:outline-none tracking-wider text-sm duration-300"
-        />
+      <div className="flex flex-col md:flex-row gap-4 mb-10 w-full max-w-4xl">
+        <div className="relative flex-1 group">
+          <input
+            id="collection-search"
+            type="text"
+            placeholder="Search Warriors..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full bg-slate-900/80 border-2 border-slate-800 rounded-xl px-4 py-3 text-slate-200 placeholder-slate-600 focus:border-red-600/50 focus:outline-none tracking-widest text-xs uppercase duration-300"
+          />
+          <div className="absolute inset-0 rounded-xl bg-red-600/5 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity" />
+        </div>
         <div className="flex gap-2 flex-wrap justify-center">
-          {TYPES.map((type) => (
+          {RARITIES.map((rarity) => (
             <button
-              key={type}
-              id={`filter-${type.toLowerCase()}`}
-              onClick={() => setTypeFilter(type)}
-              className={`px-4 py-2 rounded-xl text-xs tracking-widest font-semibold duration-300 cursor-pointer ${
-                typeFilter === type
-                  ? "bg-red-700 text-white"
-                  : "bg-slate-800/50 text-slate-400 border border-slate-600/30 hover:bg-slate-700/50 hover:text-slate-200"
+              key={rarity}
+              id={`filter-${rarity.toLowerCase()}`}
+              onClick={() => setRarityFilter(rarity)}
+              className={`px-5 py-2.5 rounded-lg text-[10px] tracking-[0.2em] font-black uppercase duration-300 cursor-pointer border-2 ${
+                rarityFilter === rarity
+                  ? "bg-red-600 border-red-500 text-white shadow-[0_0_15px_rgba(220,38,38,0.4)]"
+                  : "bg-slate-900/50 text-slate-500 border-slate-800 hover:border-slate-600 hover:text-slate-300"
               }`}
             >
-              {type}
+              {rarity === "ALL" ? "ALL" : getRarityLabel(rarity)}
             </button>
           ))}
         </div>
       </div>
 
       {/* Cards Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 w-full max-w-6xl">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 w-full max-w-7xl">
         {displayed.map((card, index) => (
-          <div
-            key={card.id || index}
-            className="group relative bg-slate-800/30 border border-slate-700/30 rounded-xl overflow-hidden hover:border-red-700/50 hover:scale-[1.03] duration-300 cursor-pointer"
-          >
-            <div className="aspect-3/4 bg-linear-to-b from-slate-700/50 to-slate-800/80 flex items-center justify-center overflow-hidden">
-              {card.image ? (
-                <img src={card.image} alt={card.name} className="w-full h-full object-cover group-hover:scale-105 duration-500" loading="lazy" />
-              ) : (
-                <div className="flex flex-col items-center justify-center p-3 text-center w-full h-full bg-linear-to-b from-slate-700/80 to-slate-900/90">
-                  <span className="text-3xl mb-2">🃏</span>
-                  <span className="text-white font-bold text-sm">{card.name}</span>
-                  <span className="text-yellow-400 text-xs mt-1">⚡ {card.power}</span>
-                </div>
-              )}
-            </div>
-            <div className="p-3">
-              <p className="text-slate-200 font-semibold text-xs truncate">{card.name}</p>
-              <div className="flex justify-between items-center mt-1.5">
-                <span className={`text-[10px] px-2 py-0.5 rounded-full border font-bold ${getRarityColor(card.rarity)}`}>
-                  {getRarityLabel(card.rarity)}
-                </span>
-                <span className="text-slate-500 text-[10px]">⚡{card.power}</span>
-              </div>
-            </div>
+          <div key={card.id || index} className="w-full">
+            <DragonBallCard card={card} />
           </div>
         ))}
       </div>
@@ -123,7 +103,7 @@ export default function CollectionPage() {
             id="pagination-prev"
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={page === 1}
-            className="px-4 py-2 rounded-xl text-sm bg-slate-800/50 text-slate-300 hover:bg-slate-700/50 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer duration-300"
+            className="px-4 py-2 rounded-xl text-sm text-slate-300 hover:text-red-700/70 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer duration-300"
           >
             ← Prev
           </button>
@@ -132,7 +112,7 @@ export default function CollectionPage() {
             id="pagination-next"
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             disabled={page === totalPages}
-            className="px-4 py-2 rounded-xl text-sm bg-slate-800/50 text-slate-300 hover:bg-slate-700/50 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer duration-300"
+            className="px-4 py-2 rounded-xl text-sm text-slate-300 hover:text-red-700/70 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer duration-300"
           >
             Next →
           </button>
