@@ -1,4 +1,5 @@
-export const ITEMS_PER_PAGE = 20;
+export const ITEMS_PER_PAGE = 24;
+export const API_FETCH_LIMIT = 300;
 export const RARITIES = ["ALL", "C", "SR", "L"];
 
 export   const rarityConfig = {

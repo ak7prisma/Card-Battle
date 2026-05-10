@@ -1,17 +1,8 @@
-/**
- * One Piece TCG API Service (apitcg.com)
- * Auth: x-api-key header
- * Paginated: 25 cards/page, fetches up to 1000 cards max
- */
+import { API_FETCH_LIMIT } from "../constant/card";
 
-// Since we have a Vite proxy, we hit the local proxy URL to avoid CORS:
 const API_URL = "api/dragon-ball-fusion/cards";
 const API_KEY = import.meta.env.VITE_TCG_API_KEY;
 
-/**
- * Normalize a single card from the apitcg.com One Piece response format.
- * API shape: { id, code, rarity, type, name, images: {small, large}, cost, power, counter, color, family, ability, trigger, attribute: {name, image}, set: {name} }
- */
 function normalizeCard(raw) {
   const power = parseInt(raw.power) || 0;
   const rawCounter = raw.counter;
@@ -61,7 +52,7 @@ export async function fetchCards() {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 10000);
 
-    const url = `${API_URL}?limit=1000`;
+    const url = `${API_URL}?limit=${API_FETCH_LIMIT}`;
     console.log("📡 Fetching fresh cards from API...");
     
     const response = await fetch(url, {
