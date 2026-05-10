@@ -29,8 +29,8 @@ function normalizeCard(raw) {
   };
 }
 
-const CACHE_KEY = "card_battle_collection";
-const CACHE_TIMESTAMP_KEY = "card_battle_timestamp";
+const CACHE_KEY = `card_battle_collection_${API_FETCH_LIMIT}`;
+const CACHE_TIMESTAMP_KEY = `card_battle_timestamp_${API_FETCH_LIMIT}`;
 const CACHE_DURATION = 1000 * 60 * 60;
 
 export async function fetchCards() {
@@ -52,41 +52,60 @@ export async function fetchCards() {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 10000);
 
-    const url = `${API_URL}?limit=${API_FETCH_LIMIT}`;
-    console.log("📡 Fetching fresh cards from API...");
-    
-    const response = await fetch(url, {
-      signal: controller.signal,
-      headers: { "x-api-key": API_KEY },
-    });
+    let rawCards = [];
+    const limitPerPage = Math.min(100, API_FETCH_LIMIT);
+    const totalPages = Math.ceil(API_FETCH_LIMIT / 100);
+
+    console.log(`📡 Fetching fresh cards from API (Target: ${API_FETCH_LIMIT} max total cards)...`);
+
+    for (let page = 1; page <= totalPages; page++) {
+      const url = `${API_URL}?limit=${limitPerPage}&page=${page}`;
+      const response = await fetch(url, {
+        signal: controller.signal,
+        headers: { "x-api-key": API_KEY },
+      });
+
+      if (!response.ok) throw new Error(`API responded with status ${response.status}`);
+
+      const json = await response.json();
+      const pageData = json.data || [];
+      rawCards = rawCards.concat(pageData);
+
+      // Stop if we got less than requested (meaning no more pages)
+      if (pageData.length < limitPerPage) break;
+    }
+
     clearTimeout(timeout);
 
-    if (!response.ok) throw new Error(`API responded with status ${response.status}`);
+    // Filter by type first
+    const characterCards = rawCards.filter(c => {
+      const type = (c.type || c.cardType || "").toUpperCase();
+      return type === "CHARACTER";
+    });
 
-    const json = await response.json();
-    const cards = (json.data || []).map(normalizeCard);
+    const cards = characterCards.slice(0, API_FETCH_LIMIT).map(normalizeCard);
     const usable = cards.filter((c) => c.name && c.name !== "Unknown Card");
 
     if (usable.length > 0) {
-      console.log(`✅ API fetch successful: ${usable.length} cards`);
-      
+      console.log(`API fetch successful: ${usable.length} cards`);
+
       // Update cache
       localStorage.setItem(CACHE_KEY, JSON.stringify(usable));
       localStorage.setItem(CACHE_TIMESTAMP_KEY, now.toString());
-      
+
       return usable;
     }
 
     throw new Error("No usable cards from API");
   } catch (error) {
-    console.error("⚠️ API fetch failed:", error.message);
-    
+    console.error("API fetch failed:", error.message);
+
     // Fallback to stale cache if API fails
     if (cachedData) {
-      console.warn("🔄 API failed, falling back to stale cache");
+      console.warn("API failed, falling back to stale cache");
       return JSON.parse(cachedData);
     }
-    
+
     return [];
   }
 }
