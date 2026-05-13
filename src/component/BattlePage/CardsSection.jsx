@@ -17,23 +17,19 @@ export default function CardsSection({ isFlip, isShuffle, Card1, Card2 }) {
 
   return (
     <section className="flex justify-center w-full gap-6 md:gap-10 mb-5">
-      {/* === Player 1 (Red) === */}
       <div className="flex max-w-full max-h-full justify-center relative">
-        {/* Card Back (face-down, flips away) */}
         <div className={`${cardSize} ${animateClass} rounded-xl overflow-hidden ${isFlip ? "rotate-y-180" : ""} ${
           isShuffle ? "-translate-x-10 -translate-y-5 md:-translate-x-40 md:-translate-y-10 z-0" : "z-30"
         }`}>
           <CardBack color="red" />
         </div>
 
-        {/* Card Front (revealed on flip) */}
         <div className={`absolute ${cardSize} ${animateClass} z-30 rotate-y-180 rounded-xl overflow-hidden ${
           isFlip ? "rotate-y-360" : ""
         }`}>
           {Card1 ? <DragonBallCard card={Card1} /> : <CardBack color="red" />}
         </div>
 
-        {/* Deck stack cards */}
         <div className={`absolute ${cardSize} ${animateClass} rounded-xl overflow-hidden ${
           isShuffle ? "z-30" : "translate-1 md:translate-2 z-20"
         }`}>
@@ -46,23 +42,19 @@ export default function CardsSection({ isFlip, isShuffle, Card1, Card2 }) {
         </div>
       </div>
 
-      {/* === Player 2 (Cyan) === */}
       <div className="flex max-w-full max-h-full justify-center relative">
-        {/* Card Back (face-down, flips away) */}
         <div className={`${cardSize} ${animateClass} rounded-xl overflow-hidden ${isFlip ? "rotate-y-180" : ""} ${
           isShuffle ? "translate-x-10 translate-y-5 md:translate-x-40 md:translate-y-10 z-0" : "z-30"
         }`}>
           <CardBack color="cyan" />
         </div>
 
-        {/* Card Front (revealed on flip) */}
         <div className={`absolute ${cardSize} ${animateClass} z-30 rotate-y-180 rounded-xl overflow-hidden ${
           isFlip ? "rotate-y-360" : ""
         }`}>
           {Card2 ? <DragonBallCard card={Card2} /> : <CardBack color="cyan" />}
         </div>
 
-        {/* Deck stack cards */}
         <div className={`absolute ${cardSize} ${animateClass} rounded-xl overflow-hidden ${
           isShuffle ? "z-30" : "translate-1 md:translate-2 z-20"
         }`}>
