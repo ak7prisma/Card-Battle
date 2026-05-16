@@ -17,15 +17,7 @@ function normalizeCard(raw) {
     power,
     counter,
     cost: parseInt(raw.cost) || 1,
-    ability: raw.ability || "",
-    trigger: raw.trigger || "",
-    color: raw.color || "",
-    family: raw.family || "",
     image: raw.images?.large || raw.images?.small || "",
-    imageSmall: raw.images?.small || "",
-    attribute: raw.attribute?.name || "",
-    attributeImage: raw.attribute?.image || "",
-    set: raw.set?.name || "",
   };
 }
 
