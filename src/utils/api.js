@@ -1,6 +1,8 @@
 import { API_FETCH_LIMIT } from "../constant/card";
 
-const API_URL = import.meta.env.VITE_TCG_API_DRAGONBALL_URL;
+const API_URL = import.meta.env.DEV 
+  ? "/api/dragon-ball-fusion/cards" 
+  : import.meta.env.VITE_TCG_API_DRAGONBALL_URL;
 const API_KEY = import.meta.env.VITE_TCG_API_KEY;
 
 function normalizeCard(raw) {
