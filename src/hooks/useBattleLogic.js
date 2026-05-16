@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import { fetchCards, getBattleCards } from "../utils/api";
 import { getWeightedRandomCard } from "../utils/gachaSystem";
 
+//initial stats
 const INITIAL_ENERGY = 50;
 const MAX_ENERGY = 100;
 const MAX_HP = 10000;
 
-// Helper functions
+//rarity bonus
 const RARITY_BONUS = {
   C: 1,
   UC: 1.1,
@@ -18,8 +19,10 @@ const RARITY_BONUS = {
   P: 1.3
 };
 
+//get rarity mult
 const getRarityMult = (rarity) => RARITY_BONUS[rarity?.toUpperCase()] || 1;
 
+//calculate damage
 const calculateDamage = (attacker, defender) => {
   if (!attacker || !defender) return 0;
   
@@ -39,6 +42,7 @@ const calculateDamage = (attacker, defender) => {
   return Math.max(50, finalDmg);
 };
 
+//calculate charge
 const calculateCharge = (card) => {
   if (!card) return 0;
   const bonus = getRarityMult(card.rarity);
@@ -75,6 +79,7 @@ export default function useBattleLogic() {
     });
   }, []);
 
+  //win condition check
   useEffect(() => {
     if (hpPlayer1 <= 0) {
       setTimeout(() => {
@@ -89,6 +94,7 @@ export default function useBattleLogic() {
     }
   }, [hpPlayer1, hpPlayer2]);
 
+  //reset game
   const resetGame = () => {
     setHpPlayer1(MAX_HP);
     setHpPlayer2(MAX_HP);
@@ -102,6 +108,7 @@ export default function useBattleLogic() {
     setP1Action(null);
   };
 
+  //draw card
   const handleDraw = () => {
     if (battleCards.length === 0) return;
     setIsShuffle(true);
@@ -117,6 +124,7 @@ export default function useBattleLogic() {
     }, 750);
   };
 
+  //execute actions
   const executeActions = (action1, action2) => {
     setIsFlip(true);
     setGamePhase("resolving");
@@ -179,6 +187,7 @@ export default function useBattleLogic() {
     }, 4500);
   };
 
+  //handle attack
   const handleAttack = () => {
     if (activePlayer === 1) {
       if (energyPlayer1 < (Card1.cost || 1) * 10) {
@@ -199,6 +208,7 @@ export default function useBattleLogic() {
     }
   };
 
+  //handle charge
   const handleCharge = () => {
     if (activePlayer === 1) {
       if (energyPlayer1 >= MAX_ENERGY) {
