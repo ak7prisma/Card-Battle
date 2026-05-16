@@ -1,10 +1,12 @@
 import { API_FETCH_LIMIT } from "../constant/card";
 
+//set api url and key
 const API_URL = import.meta.env.DEV 
   ? "/api/dragon-ball-fusion/cards" 
   : import.meta.env.VITE_TCG_API_DRAGONBALL_URL;
 const API_KEY = import.meta.env.VITE_TCG_API_KEY;
 
+//normalize card
 function normalizeCard(raw) {
   const power = parseInt(raw.power) || 0;
   const rawCounter = raw.counter || raw.comboPower;
@@ -23,6 +25,7 @@ function normalizeCard(raw) {
   };
 }
 
+//setup cache
 const CACHE_KEY = `card_battle_collection_${API_FETCH_LIMIT}`;
 const CACHE_TIMESTAMP_KEY = `card_battle_timestamp_${API_FETCH_LIMIT}`;
 const CACHE_DURATION = 1000 * 60 * 60;
@@ -30,6 +33,8 @@ const CACHE_DURATION = 1000 * 60 * 60;
 let activeFetchPromise = null;
 
 export async function fetchCards() {
+
+  //handle multiple fetch request
   if (activeFetchPromise) {
     console.log("⏳ Reusing existing fetch promise...");
     return activeFetchPromise;
@@ -46,12 +51,12 @@ export async function fetchCards() {
   return activeFetchPromise;
 }
 
+//fetch cards api
 async function performFetch() {
   const now = Date.now();
   const cachedData = localStorage.getItem(CACHE_KEY);
   const cachedTimestamp = localStorage.getItem(CACHE_TIMESTAMP_KEY);
 
-  // Return cache if it's still fresh
   if (!API_KEY) {
     console.error("❌ VITE_TCG_API_KEY is missing! Check your .env.local file.");
   }
@@ -65,6 +70,7 @@ async function performFetch() {
     }
   }
 
+  //set timeout api request
   try {
     const controller = new AbortController();
     const timeout = setTimeout(() => {
@@ -78,6 +84,7 @@ async function performFetch() {
 
     console.log(`📡 Fetching fresh cards from API (Target: ${API_FETCH_LIMIT} max total cards)...`);
 
+    //loop fetch api
     for (let page = 1; page <= totalPages; page++) {
       const url = `${API_URL}?limit=${limitPerPage}&page=${page}`;
       const response = await fetch(url, {
@@ -97,6 +104,7 @@ async function performFetch() {
 
     clearTimeout(timeout);
 
+    //filter cards
     const characterCards = rawCards.filter(c => {
       const type = (c.type || c.cardType || "").toUpperCase();
       return type === "CHARACTER" || type === "BATTLE" || type === "LEADER";
@@ -115,6 +123,7 @@ async function performFetch() {
       return usable;
     }
 
+    //error handling
     throw new Error("No usable cards from API");
   } catch (error) {
     if (error.name === 'AbortError') {
