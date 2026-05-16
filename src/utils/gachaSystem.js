@@ -2,26 +2,42 @@ const RARITY_WEIGHTS = {
   C: 50, UC: 30, R: 15, SR: 3, SEC: 2, L: 2, SP: 2, P: 15,
 };
 
-function getRarityWeight(rarity) {
-  if (!rarity) return 50;
+function getNormalizedRarity(rarity) {
+  if (!rarity) return "C";
   const key = rarity.toUpperCase().trim();
-  if (RARITY_WEIGHTS[key] !== undefined) return RARITY_WEIGHTS[key];
-  if (key.includes("SEC") || key.includes("SECRET")) return 5;
-  if (key.includes("SR") || key.includes("SUPER")) return 15;
-  if (key.includes("R")) return 30;
-  return 50;
+  if (RARITY_WEIGHTS[key] !== undefined) return key;
+  if (key.includes("SEC") || key.includes("SECRET")) return "SEC";
+  if (key.includes("SR") || key.includes("SUPER")) return "SR";
+  if (key.includes("R")) return "R";
+  return "C";
 }
 
 export function getWeightedRandomCard(cards) {
   if (!cards || cards.length === 0) return null;
-  const weighted = cards.map((card) => ({ card, weight: getRarityWeight(card.rarity) }));
-  const total = weighted.reduce((sum, w) => sum + w.weight, 0);
-  let roll = Math.random() * total;
-  for (const w of weighted) {
-    roll -= w.weight;
-    if (roll <= 0) return w.card;
+
+  const groups = {};
+  cards.forEach((card) => {
+    const key = getNormalizedRarity(card.rarity);
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(card);
+  });
+
+  const availableKeys = Object.keys(groups);
+  const totalWeight = availableKeys.reduce((sum, key) => sum + RARITY_WEIGHTS[key], 0);
+
+  let roll = Math.random() * totalWeight;
+  let selectedKey = availableKeys[0];
+
+  for (const key of availableKeys) {
+    roll -= RARITY_WEIGHTS[key];
+    if (roll <= 0) {
+      selectedKey = key;
+      break;
+    }
   }
-  return cards[Math.floor(Math.random() * cards.length)];
+
+  const pool = groups[selectedKey];
+  return pool[Math.floor(Math.random() * pool.length)];
 }
 
 export function getRarityLabel(rarity) {
