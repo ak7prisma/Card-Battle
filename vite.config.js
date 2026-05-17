@@ -10,7 +10,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://apitcg.com',
+        target: 'https://www.apitcg.com',
         changeOrigin: true,
       }
     }

@@ -15,6 +15,7 @@ function getNormalizedRarity(rarity) {
 export function getWeightedRandomCard(cards) {
   if (!cards || cards.length === 0) return null;
 
+  //group cards by rarity
   const groups = {};
   cards.forEach((card) => {
     const key = getNormalizedRarity(card.rarity);

@@ -1,16 +1,16 @@
 import { API_FETCH_LIMIT } from "../constant/card";
 
 //set api url and key
-const API_URL = import.meta.env.DEV 
-  ? "/api/dragon-ball-fusion/cards" 
+const API_URL = import.meta.env.DEV
+  ? "/api/dragon-ball-fusion/cards"
   : import.meta.env.VITE_TCG_API_DRAGONBALL_URL;
 const API_KEY = import.meta.env.VITE_TCG_API_KEY;
 
 //normalize card
 function normalizeCard(raw) {
-  const power = parseInt(raw.power) || 0;
+  const power = Number.parseInt(raw.power) || 0;
   const rawCounter = raw.counter || raw.comboPower;
-  const counter = rawCounter === "-" || rawCounter === null || rawCounter === undefined ? 0 : parseInt(rawCounter) || 0;
+  const counter = rawCounter === "-" || rawCounter === null || rawCounter === undefined ? 0 : Number.parseInt(rawCounter) || 0;
 
   return {
     id: raw.id || raw.code || `card-${Math.random().toString(36).slice(2, 8)}`,
@@ -20,7 +20,7 @@ function normalizeCard(raw) {
     rarity: (raw.rarity || "C").toUpperCase(),
     power,
     counter,
-    cost: parseInt(raw.cost) || 1,
+    cost: Number.parseInt(raw.cost) || 1,
     image: raw.images?.large || raw.images?.small || "",
   };
 }
@@ -61,7 +61,7 @@ async function performFetch() {
     console.error("❌ VITE_TCG_API_KEY is missing! Check your .env.local file.");
   }
 
-  if (cachedData && cachedTimestamp && now - parseInt(cachedTimestamp) < CACHE_DURATION) {
+  if (cachedData && cachedTimestamp && now - Number.parseInt(cachedTimestamp) < CACHE_DURATION) {
     console.log("🚀 Serving cards from LocalStorage cache");
     try {
       return JSON.parse(cachedData);
