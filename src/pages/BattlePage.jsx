@@ -53,6 +53,16 @@ export default function BattlePage() {
     return <FaUserAlt className="text-slate-200" />;
   };
 
+  const getToastStyles = () => {
+    if (gamePhase === "resolving") {
+      return "bg-purple-900/90 border-purple-500/50 text-purple-100";
+    }
+    if (activePlayer === 1) {
+      return "bg-red-950/90 border-red-500/50 text-red-100";
+    }
+    return "bg-cyan-950/90 border-cyan-500/50 text-cyan-100";
+  };
+
   return (
     <main className="flex flex-col justify-center items-center w-full gap-5">
         <PlayersSection
@@ -81,15 +91,9 @@ export default function BattlePage() {
 
         {Card1 && showToast && (
           <div 
-            className={`fixed bottom-8 right-8 px-6 py-4 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.8)] border-2 z-50 transition-all duration-500 backdrop-blur-xl min-w-[280px] flex items-center gap-4 group ${
-              gamePhase === "resolving"
-                ? "bg-purple-900/90 border-purple-500/50 text-purple-100"
-                : activePlayer === 1 
-                  ? "bg-red-950/90 border-red-500/50 text-red-100" 
-                  : "bg-cyan-950/90 border-cyan-500/50 text-cyan-100"
-            }`}
+            className={`fixed bottom-8 right-8 px-6 py-4 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.8)] border-2 z-50 transition-all duration-500 backdrop-blur-xl min-w-70 flex items-center gap-4 group ${getToastStyles()}`}
           >
-            <div className="flex-shrink-0 text-xl animate-pulse">
+            <div className="shrink-0 text-xl animate-pulse">
               {getIcon()}
             </div>
             
