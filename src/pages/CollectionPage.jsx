@@ -1,22 +1,15 @@
 import { useState, useEffect } from "react";
-import { fetchCards } from "../utils/api";
 import DragonBallCard from "../component/ui/DragonBallCard";
 import { RARITIES, ITEMS_PER_PAGE } from "../constant/card";
 import { getRarityLabel } from "../utils/gachaSystem";
+import { useGame } from "../context/GameContext";
 
 export default function CollectionPage() {
-  const [cards, setCards] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { cards, isLoading: loading } = useGame();
   const [rarityFilter, setRarityFilter] = useState("ALL");
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 
-  useEffect(() => {
-    fetchCards().then((data) => {
-      setCards(data);
-      setLoading(false);
-    });
-  }, []);
 
   useEffect(() => { setPage(1); }, [rarityFilter, search]);
 
